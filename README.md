@@ -1,1 +1,1 @@
-# algo-study-swift
+# Algorithms & Data Structures (using Swift)
