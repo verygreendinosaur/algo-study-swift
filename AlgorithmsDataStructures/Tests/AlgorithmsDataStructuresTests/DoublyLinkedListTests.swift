@@ -10,18 +10,6 @@ import XCTest
 
 final class DoublyLinkedListTests: XCTestCase {
   
-  func testExample() throws {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-  }
-  
-  func testPerformanceExample() throws {
-    // This is an example of a performance test case.
-    self.measure {
-      // Put the code you want to measure the time of here.
-    }
-  }
-  
   func testConstructor() {
     // When
     var list = DoublyLinkedList()
@@ -73,6 +61,29 @@ final class DoublyLinkedListTests: XCTestCase {
     XCTAssertEqual(list.tail!.val, 5)
     XCTAssertEqual(nodeVals, [1,2,3,4,5])
     XCTAssertEqual(nodeValsReverse, [5,4,3,2,1])
+    
+    // When
+    list = DoublyLinkedList()
+    list.addToFront(5)
+    list.addToFront(4)
+    list.addToFront(3)
+    list.addToFront(2)
+    list.addToFront(1)
+    
+    XCTAssertEqual(list.popTail()!.val, 5)
+    XCTAssertEqual(list.tail!.val, 4)
+    
+    XCTAssertEqual(list.popTail()!.val, 4)
+    XCTAssertEqual(list.tail!.val, 3)
+    
+    XCTAssertEqual(list.popTail()!.val, 3)
+    XCTAssertEqual(list.tail!.val, 2)
+    
+    XCTAssertEqual(list.popTail()!.val, 2)
+    XCTAssertEqual(list.tail!.val, 1)
+
+    XCTAssertEqual(list.popTail()!.val, 1)
+    XCTAssertNil(list.tail)
   }
   
   func test_addBeforeAndAfter() {
@@ -111,6 +122,28 @@ final class DoublyLinkedListTests: XCTestCase {
     // Then
     XCTAssertEqual(nodeVals, [1,2,3,4,5])
     XCTAssertEqual(nodeValsReverse, [5,4,3,2,1])
+  }
+  
+  func testLRUCache() {
+    // When
+    let lruCache = LRUCache(capacity: 3)
+    
+    lruCache.put(3, 3)
+    lruCache.put(2, 2)
+    lruCache.put(1, 1)
+    
+    // Then
+    XCTAssertEqual(lruCache.peek(), 1)
+    XCTAssertEqual(lruCache.get(3), 3)
+    XCTAssertEqual(lruCache.peek(), 3)
+    lruCache.put(2, 20)
+    XCTAssertEqual(lruCache.peek(), 20)
+    lruCache.put(4, 4)
+    XCTAssertEqual(lruCache.size, 3)
+    lruCache.put(5, 5)
+    XCTAssertEqual(lruCache.size, 3)
+    lruCache.put(6, 5)
+    XCTAssertEqual(lruCache.size, 3)
   }
   
 }

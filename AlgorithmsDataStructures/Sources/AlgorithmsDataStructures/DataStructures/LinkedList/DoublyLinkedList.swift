@@ -12,12 +12,15 @@ class DoublyLinkedListNode {
   var prev: DoublyLinkedListNode?
   var next: DoublyLinkedListNode?
   var val: Int?
+  var key: Int?
   
-  init(_ val: Int?) {
+  init(_ val: Int?, _ key: Int? = nil) {
     self.val = val
+    self.key = key
   }
   
 }
+
 
 class DoublyLinkedList {
   
@@ -55,6 +58,10 @@ class DoublyLinkedList {
     insert(DoublyLinkedListNode(val), after: dummyHead)
   }
   
+  public func addToFront(_ node: DoublyLinkedListNode) {
+    insert(node, after: dummyHead)
+  }
+  
   public func addAfter(_ val: Int, node: DoublyLinkedListNode) {
     insert(DoublyLinkedListNode(val), after: node)
   }
@@ -67,8 +74,12 @@ class DoublyLinkedList {
     insert(DoublyLinkedListNode(val), before: dummyTail)
   }
   
-  public func popTail() -> DoublyLinkedListNode? {
+  @discardableResult public func popTail() -> DoublyLinkedListNode? {
     return remove(tail)
+  }
+  
+  @discardableResult public func delete(_ node: DoublyLinkedListNode) -> DoublyLinkedListNode? {
+    return remove(node)
   }
   
   private func insert(_ node: DoublyLinkedListNode, after existingNode: DoublyLinkedListNode) {
@@ -101,6 +112,7 @@ class DoublyLinkedList {
   
   private func remove(_ node: DoublyLinkedListNode?) -> DoublyLinkedListNode? {
     guard let node = node else { return nil }
+    
     // node before node to remove
     let beforeNode = node.prev
     
@@ -110,6 +122,9 @@ class DoublyLinkedList {
     // point before node <-> after node
     beforeNode?.next = afterNode
     afterNode?.prev = beforeNode
+    
+//    node.prev = nil
+//    node.next = nil
     
     return node
   }
